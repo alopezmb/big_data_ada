@@ -1,0 +1,11 @@
+version: '3'
+services:
+
+  pyspark:
+    container_name: pyspark-modeltrainer
+    build: ./pyspark
+    environment:
+      - MODELS_MOUNTPATH=/mnt/models
+    volumes:
+      - ./pyspark/models:/mnt/models # Make sure container's volume path is the same as the ENV variable ASSETSPATH
+
