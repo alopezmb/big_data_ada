@@ -1,8 +1,10 @@
+Flask
 apache-airflow
 beautifulsoup4 
 bs4
 frozendict
 geopy
+ipython
 kafka-python
 matplotlib
 numpy
@@ -10,8 +12,12 @@ py4j
 pyelasticsearch
 pymongo
 requests
+scipy
+selenium
 sklearn
 tabulate
 tldextract
 wikipedia
+findspark
 iso8601
+notebook>=5.7.8

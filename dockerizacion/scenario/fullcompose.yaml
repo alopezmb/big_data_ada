@@ -1,14 +1,19 @@
 version: '3'
-services:
 
+services:
   mongodb:
     container_name: mongodb
     build: ./mongodb
     ports:
       - "27017:27017" # remember the port expose syntax is HOST:CONTAINER !
+    volumes:
       - mongodbdata:/data/mongodb
- 
-  #broker:
+      # - mongodbdata:/data/db # where MongoDB by default will write its data files
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME=root
+    #   MONGO_INITDB_ROOT_PASSWORD=password
+
+  # broker:
   #      build: ./kafka
   #      hostname: kafka-zookeper
   #      container_name: kafka-zookeper
@@ -18,7 +23,7 @@ services:
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
-      
+
   kafka:
     container_name: kafka
     image: wurstmeister/kafka:2.12-2.3.0
@@ -28,6 +33,12 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "flight_delay_classification_request:1:1" #Create topic named flight_delay_classification_request. Partitions: 1, Replicas:1.
+
+ webserver:
+  container_name: webserver
+  build: ./flask
+  ports:
+    - "1212:80"
 
 
 volumes:

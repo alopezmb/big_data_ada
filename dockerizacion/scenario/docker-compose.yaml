@@ -1,0 +1,37 @@
+version: '3'
+services:
+  spark-master:
+    container_name: spark-master
+    image: bitnami/spark:2.4.4
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - '8080:8080'
+
+  spark-worker-1:
+    container_name: spark-worker-1
+    image: bitnami/spark:2.4.4
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_CORES=1
+    ports:
+    - '8081:8081'
+
+  spark-submit:
+    container_name: spark-submit
+    build: 
+      context: ./spark_submit
+      args:
+        - JAR_NAME=flight_prediction.jar
+    depends_on:
+      - spark-master
+
+    environment:
+      - SPARK_APPLICATION_MAIN_CLASS=es.upm.dit.ging.predictor.MakePrediction
+      - "SPARK_APPLICATION_ARGS=--packages org.mongodb.spark:mongo-spark-connector_2.11:2.3.2,org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0"
+      - SPARK_MASTER_NAME=spark-master
+
+
+
