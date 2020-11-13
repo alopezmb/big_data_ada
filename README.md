@@ -2,7 +2,7 @@
 
 Based on the [Agile_Data_Code_2](https://github.com/rjurney/Agile_Data_Code_2) repository.
 
-Distributed instance of  the [big_data_ada](https://github.com/ging/big_data_ada) respository.
+Distributed instance of  the [practica_big_data_2019](https://github.com/ging/practica_big_data_2019) respository.
 
 Have problems? Please file an issue!
 
