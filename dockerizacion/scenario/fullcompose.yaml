@@ -6,6 +6,7 @@ services:
     build: ./mongodb
     ports:
       - "27017:27017" # remember the port expose syntax is HOST:CONTAINER !
+    volumes:
       - mongodbdata:/data/mongodb
  
   #broker:
@@ -28,6 +29,12 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_CREATE_TOPICS: "flight_delay_classification_request:1:1" #Create topic named flight_delay_classification_request. Partitions: 1, Replicas:1.
+
+ webserver:
+  container_name: webserver
+  build: ./flask
+  ports:
+    - "1212:80"
 
 
 volumes:
