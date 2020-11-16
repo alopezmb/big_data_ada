@@ -38,6 +38,7 @@ def get_flight_distance(client, origin, dest):
     "Dest": dest,
   }
   record = client.agile_data_science.origin_dest_distances.find_one(query)
+  print(record['Distance'], flush=True)
   return record["Distance"]
 
 def get_regression_date_args(iso_date):

@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  spark-submit:
+    container_name: spark-submit
+    build: 
+      context: ./spark
+      args:
+        - JAR_NAME=flight_prediction_no_hdfs.jar
+    environment:
+      - SPARK_APPLICATION_MAIN_CLASS=es.upm.dit.ging.predictor.MakePrediction
+      - "SPARK_SUBMIT_ARGS=--packages org.mongodb.spark:mongo-spark-connector_2.11:2.3.2,org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0"
+      - SPARK_MASTER_NAME=spark-master
+    volumes:
+      - ./spark/models/:/job_data/models  #Bind mount to mount models dir on each spark node
+    networks:
+      - flight_prediction_network
+    
+
+networks:
+  flight_prediction_network:
+    driver: bridge
