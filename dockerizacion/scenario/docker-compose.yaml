@@ -18,29 +18,46 @@ services:
       - "1212:80"
     networks:
       - flight_prediction_network
-
+  
   zookeeper:
     container_name: zookeeper
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
+    image: confluentinc/cp-zookeeper:5.3.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
     networks:
       - flight_prediction_network
 
   kafka:
     container_name: kafka
-    image: wurstmeister/kafka:2.12-2.3.0
-    ports:
-      - "9093:9092"
+    image: confluentinc/cp-kafka:5.3.0
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:9092"
-      KAFKA_LISTENERS: "PLAINTEXT://:9092"
-      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_CREATE_TOPICS: "flight_delay_classification_request:1:1" #Create topic named flight_delay_classification_request. Partitions: 1, Replicas:1.
+      KAFKA_LISTENERS: PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+     - zookeeper
     networks:
       - flight_prediction_network
+
+  # Container that will create topics and then will die gracefully.
+  kafka-setup:
+    image: confluentinc/cp-kafka:5.3.0
+    hostname: kafka-setup
+    container_name: kafka-setup
+    depends_on:
+      - kafka
+    command: "bash -c 'echo Waiting for Kafka to be ready... && \
+                       cub kafka-ready -b kafka:9092 1 20 && \
+                       kafka-topics --create --if-not-exists --zookeeper zookeeper:2181 --partitions 1 --replication-factor 1 --topic flight_delay_classification_request'"
+    networks:
+      - flight_prediction_network
+ 
+  #testkafka:
+  #  container_name: testkafka
+  #  build: ./testkafka
+  #  networks:
+  #    - flight_prediction_network
 
   spark-master:
     container_name: spark-master
@@ -69,9 +86,10 @@ services:
     networks:
       - flight_prediction_network
 
-volumes:
-  mongodbdata:
 
 networks:
   flight_prediction_network:
     driver: bridge
+
+volumes:
+  mongodbdata:

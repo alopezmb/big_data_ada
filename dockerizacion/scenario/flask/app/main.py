@@ -26,7 +26,7 @@ import datetime
 
 # Setup Kafka
 from kafka import KafkaProducer
-producer = KafkaProducer(bootstrap_servers=['kafka:9092'],api_version=(0,10))
+producer = KafkaProducer(bootstrap_servers=['kafka:9092'],api_version=(2,3,0))
 PREDICTION_TOPIC = 'flight_delay_classification_request'
 
 import uuid
@@ -236,7 +236,7 @@ def classify_flight_delays_realtime():
   
   message_bytes = json.dumps(prediction_features).encode()
   producer.send(PREDICTION_TOPIC, message_bytes)
-  producer.flush()
+  #producer.flush()
 
   response = {"status": "OK", "id": unique_id}
   return json_util.dumps(response)

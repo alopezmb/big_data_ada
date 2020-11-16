@@ -1,4 +1,5 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.8
+FROM tiangolo/meinheld-gunicorn-flask:python3.7
+#FROM tiangolo/uwsgi-nginx-flask:python3.8
 
 COPY ./app /app
 COPY ./requirements.txt /app/.
