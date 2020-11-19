@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="flight_prediction_no_hdfs">
+    <output-path>$PROJECT_DIR$/out/artifacts/flight_prediction_no_hdfs</output-path>
+    <root id="archive" name="flight_prediction_no_hdfs.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="flight_prediction" />
+      <element id="library" level="module" name="sbt: unmanaged-sources-and-docs" module-name="flight_prediction" />
+    </root>
+  </artifact>
+</component>
