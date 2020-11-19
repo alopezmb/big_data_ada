@@ -1,13 +1,13 @@
 version: '3'
 services:
 
-  #pyspark:
-  #  container_name: pyspark-modeltrainer
-  #  build: ./pyspark
-  #  environment:
-  #    - MODELS_MOUNTPATH=/mnt/models
-  #  volumes:
-  #    - ./pyspark/models:/mnt/models
+  pyspark:
+    container_name: pyspark-modeltrainer
+    build: ./pyspark
+    environment:
+      - MODELS_MOUNTPATH=/mnt/models
+    volumes:
+      - ./pyspark/models:/mnt/models
 
   jarbuilder:
     container_name: jarbuilder
