@@ -46,7 +46,7 @@ Desde el directorio raíz del repositorio abrimos un terminal e introducimos  lo
 ```bash
 cd scenario
 sudo docker-compose up
-sudo docker-compose -f docker-compose-spark-submit up
+sudo docker-compose -f docker-compose-spark-submit.yaml up
 ```
 
 Hemos separado el escenario en dos ficheros yaml docker-compose porque spark-submit genera una enorme cantidad de mensajes. Por tanto, si se incluye ste contenedor en la especificación con los otros, una vez se arranquen no podremos ver los logs por el terminal ya que unicamente veremos los mensajes de spark-submit. Con esta separación podremos ver adecuadamente los mensajes de log de todos los contenedores. 
