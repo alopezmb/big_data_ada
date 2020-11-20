@@ -54,7 +54,7 @@ Queda pendiente lanzar la aplicación con spark-submit. Antes de hacerlo, se deb
 Una vez hecho esto ya podemos añadir a la aplicación final el contenedor restante con el siguiente comando
 
 ```bash
-sudo docker-compose -f docker-compose-spark-submit up
+sudo docker-compose -f docker-compose-spark-submit.yaml up
 ```
 
 Hemos separado el escenario en dos ficheros yaml docker-compose porque `spark-submit` genera una enorme cantidad de mensajes. Por tanto, si se incluye este contenedor en la especificación con los otros, una vez se arranquen no podremos ver los logs por el terminal ya que unicamente veremos los mensajes de spark-submit. Con esta separación podremos ver adecuadamente los mensajes de log de todos los contenedores.
