@@ -1,4 +1,4 @@
-# Práctica Big Data: Docker + Docker-Compose + Spark-Submit (v1.0; 7puntos)
+# Práctica Big Data: Docker + Docker-Compose + Spark-Submit + Cassandra (v2.0; 9puntos)
 
 El escenario ha sido configurado y desplegado bajo las siguientes condiciones y versiones:
 
@@ -7,6 +7,15 @@ El escenario ha sido configurado y desplegado bajo las siguientes condiciones y 
 - Versión docker-compose utilizada: 1.25.5
 
 Con esta configuración se ha comprobado su correcto funcionamiento.
+
+
+
+## Consideraciones con Cassandra
+
+Los pasos a seguir son prácticamente los mismos que antes. Por tanto se recomienda seguir los pasos ya conocidos. Hay que tener en cuenta que:
+
+- La **configuración inicial se hace de la misma manera.** La clase de Scala ha cambiado para adaptarla a Cassandra pero al final lo que queremos en este primer paso es generar el JAR, que se hace como ya se conoce.
+- La **primera vez** que se vaya a arrancar el escenario (Arranque del Escenario), primero debemos configurar el keyspace y familias de columnas a utilizar en Cassandra (no se pueden crear dinámicamente y si se levanta el escenario entero la primera vez, dará error).  Luego ya se pueden levantar el resto. En sucesivas ocasiones, se podrán arrancar todos los contenedores a la vez sin ningún problema. 
 
 ## Configuración Inicial
 
@@ -39,27 +48,41 @@ Una vez ejecutado el script, la configuración inicial ha terminado.
 
 Desde el directorio raíz del repositorio abrimos un terminal e introducimos  los siguientes comandos:
 
+1. **SI ES LA PRIMERA VEZ QUE SE ARRANCA EL ESCENARIO, SEGUIR ESTOS PASOS:**
+
 ```bash
 cd scenario
-sudo docker-compose up
+sudo docker-compose up cassandra-1 cassandra-2
 ```
 
-Con esto, se levanta gran parte de la aplicación. Concretamente
-- servidor web (flask)
-- _cluster_ (spark)
-- _pipeline_ de datos (kafka + zookeeper)
-- almacenamiento (mongodb)
+La primera vez sólo se levantará en primer lugar el cluster de cassandra porque es necesario configurar el modelo de datos a utilizar.
 
-Queda pendiente lanzar la aplicación con spark-submit. Antes de hacerlo, se debe actualizar el _argumento_ `JAR_NAME` definido en `docker-compose-spark-submit` con el nombre del  fichero `.jar` generado en la configuración inicial.
-Una vez hecho esto ya podemos añadir a la aplicación final el contenedor restante con el siguiente comando
+A través de un nuevo terminal, acceder al bash del contenedor cassandra-1 y configurar los keyspaces, familias de columnas y demás  configuraciones iniciales de cassandra:
 
 ```bash
-sudo docker-compose -f docker-compose-spark-submit.yaml up
+sudo docker-compose exec cassandra-1 bash #Acceso al bash de cassandra-1
+$cassandra-1> cqlsh -f /config_db/flights.cql #Comando cqlsh dentro del bash de cassandra-1
+$cassandra-1> exit #Salimos del bash de cassandra-1
+sudo docker-compose down #Paramos el cluster de cassandra
 ```
 
-Hemos separado el escenario en dos ficheros yaml docker-compose porque `spark-submit` genera una enorme cantidad de mensajes. Por tanto, si se incluye este contenedor en la especificación con los otros, una vez se arranquen no podremos ver los logs por el terminal ya que unicamente veremos los mensajes de spark-submit. Con esta separación podremos ver adecuadamente los mensajes de log de todos los contenedores.
+Ahora, una vez configurado Cassandra, ya procedemos al paso 2:
 
-**TODO: cambiar nivel de logging de spark-submit para poder aunar los contenedores en un único yaml.** 
+2. **ARRANQUE EN SUCESIVAS OCACIONES (IR AL PASO 1 SI ES LA PRIMERA VEZ QUE SE VA A ARRANCAR EL ESCENARIO):**
+
+Será tan simple como abrir un nuevo terminal en el directorio raíz e introducir los siguientes comandos
+
+```bash
+cd scenario # Si ya estamos en el directorio scenario, omitir.
+sudo docker-compose up #Levantamos todo el escenario
+```
+
+Con esto, se  levantan todos los contenedores. Concretamente:
+
+- servidor web (flask)
+- cluster de procesamiento (spark) + spark-submit **Ya se ha integrado en el mismo docker-compose y se ha modificado el nivel de Logging para evitar esos mensajes tan molestos.**
+- _pipeline_ de datos (kafka + zookeeper)
+- almacenamiento (cassandra)
 
 Una vez se arranquen todos los contenedores, podremos acceder al servicio web de predicción de retraso de vuelos mediante la siguiente URL:  http://localhost:1212/flights/delays/predict_kafka
 
