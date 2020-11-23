@@ -31,14 +31,32 @@ def strip_place(url):
     return url
   return p
 
-def get_flight_distance(client, origin, dest):
+def get_flight_distance(session, origin, dest):
   """Get the distance between a pair of airport codes"""
-  query = {
-    "Origin": origin,
-    "Dest": dest,
-  }
-  record = client.agile_data_science.origin_dest_distances.find_one(query)
-  return record["Distance"]
+  prepared_statement = session.prepare("SELECT distance from origin_dest_distances WHERE origin=? AND dest=?")
+  rows = session.execute(prepared_statement,[origin,dest])
+  if rows:
+    distance = rows[0].distance
+  else:
+    distance = 0
+  return distance
+
+def get_prediction(session, unique_id):
+  """Get the prediction with a given unique id"""
+  prepared_statement = session.prepare('SELECT * FROM flight_delay_classification_response WHERE "Identifier"=?')
+  rows = session.execute(prepared_statement, [unique_id])
+  prediction_jsonSerializable = {}
+
+  if rows:
+
+    prediction = rows.one()
+    column_names = prediction._fields
+
+    for colname in column_names:
+      value_of_col = getattr(prediction, colname)  # obtengo el valor de la named tuple con nombre = colname.
+      prediction_jsonSerializable[colname] = value_of_col
+
+  return prediction_jsonSerializable
 
 def get_regression_date_args(iso_date):
   """Given an ISO Date, return the day of year, day of month, day of week as the API expects them."""
