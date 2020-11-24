@@ -90,12 +90,13 @@ Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/co
     
 3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
 
-        3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
+    3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
+            
             ```
             docker run docker/compose version 
             ```
         
-        3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+    3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
         
             ```
             $ pwd
