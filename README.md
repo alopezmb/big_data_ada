@@ -105,16 +105,13 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
 
     3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
             
-            ```
-            docker run docker/compose version 
-            ```
+        docker run docker/compose version 
         
     3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+
+        $ pwd
+        /home/username/big_data_ada
         
-            ```
-            $ pwd
-            /home/username/big_data_ada
-            ```
 4. El comando a ejecutar equivalente a docker-compose up es:
     ```
     docker run --rm -it\
