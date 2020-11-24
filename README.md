@@ -73,10 +73,23 @@ Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/co
 
 1. Crear una instancia de VM de Compute Engine.
 2. Seleccionar la zona deseada (dónde está el centro de datos del que vamos a usar recursos). Elegimos la opción de Bélgica por cercanía.
-3. Seleccionamos tipo de máquina: C2-Standar-4 (suficiente RAM y CPU como para que no pete el entrenamiento del modelo. Esto se podría elegir mejor).
+3. Seleccionamos tipo de máquina: C2-Standar-4 (suficiente RAM y CPU como para que no pete el entrenamiento del modelo. Esto se podría elegir mejor). Seleccionaremos también 100Gb de disco duro (se ha comprobado que con 10Gb peta spark por falta de espacio).
 4. Cambiamos el "Boot disk" a "Container-Optimized OS stable".
 5. Permitimos el tráfico HTTP (marcar checkbox)
 6. Botón crear. Tarda algunos minutillos, pero cuando termine tendremos nuestra instancia en la lista de instancias de Computer Engine, con una IP interna, IP externa y opción a conectarnos a la instancia por SSH. 
+
+## Ajusted de red
+
+Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como nuestra aplicación utiliza el puerto 1212, debemos configurar el firewall para que permita acceder al puerto de esta instancia. Para ello:
+
+1. Choose Networking > VPC network
+2. Choose "Firewalls rules"
+3. Choose "Create Firewall Rule"
+4. To apply the rule to select VM instances, select Targets > "Specified target tags", and enter into "Target tags" the name of the tag. In our case, ```openport1212```. This tag will be used to apply the new firewall rule onto whichever instance you'd like. 
+5. To allow incoming TCP connections to port 1212, in "Protocols and Ports" enter tcp:9090
+6. CLick create
+7. Then, make sure the instances have the network tag applied. Go to instance details->Edit: Here add the tag ```openport1212``` to the network tags list.
+
 
 ## Configuración para iniciar nuestro sistema
 
