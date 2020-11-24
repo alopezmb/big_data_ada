@@ -73,7 +73,7 @@ Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/co
 
 1. Crear una instancia de VM de Compute Engine.
 2. Seleccionar la zona deseada (dónde está el centro de datos del que vamos a usar recursos). Elegimos la opción de Bélgica por cercanía.
-3. Seleccionamos tipo de máquina: EC2 Micro.
+3. Seleccionamos tipo de máquina: C2-Standar-4 (suficiente RAM y CPU como para que no pete el entrenamiento del modelo. Esto se podría elegir mejor).
 4. Cambiamos el "Boot disk" a "Container-Optimized OS stable".
 5. Permitimos el tráfico HTTP (marcar checkbox)
 6. Botón crear. Tarda algunos minutillos, pero cuando termine tendremos nuestra instancia en la lista de instancias de Computer Engine, con una IP interna, IP externa y opción a conectarnos a la instancia por SSH. 
