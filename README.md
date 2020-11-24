@@ -133,7 +133,7 @@ Recargamos la configuración de bash:
  Seguiremos las instrucciones expuestas más arriba, ya que deberemos entrenar el modelo de nuevo ya que no se encuentra entrenado en el repo.
  (Para más detalle, ver arriba)
  
- 1.- Desde la carpeta initial-configs ejecutamos el comando ```docker-compose up```. Esto entrenará el modelo y hará las funciones descritas más arriba. Tarda bastante rato.
+ 1. Desde la carpeta initial-configs ejecutamos el comando ```docker-compose up```. Esto entrenará el modelo y hará las funciones descritas más arriba. Tarda bastante rato.
  2. Ejecutamos el script correspondiente para preparar la ejecución del escenario
      ``` 
      sh scenario_initial_config.sh
