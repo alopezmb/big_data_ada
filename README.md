@@ -64,3 +64,76 @@ Hemos separado el escenario en dos ficheros yaml docker-compose porque `spark-su
 Una vez se arranquen todos los contenedores, podremos acceder al servicio web de predicción de retraso de vuelos mediante la siguiente URL:  http://localhost:1212/flights/delays/predict_kafka
 
 Se accede por el puerto **1212** al servicio web porque se ha indicado así en el puerto expuesto al host para el *webserver* en el fichero docker-compose.yaml. Se puede cambiar el puerto y utilizar cualquier otro, siempre y cuando no esté siendo utilizado por otro servicio o aplicación.
+
+# Despliegue en GCP
+
+Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/community/tutorials/docker-compose-on-container-optimized-os). A continuación, exponemos cuáes han sido para nuestro proyecto.
+
+## Configuración de la VM en GCP
+
+1. Crear una instancia de VM de Compute Engine.
+2. Seleccionar la zona deseada (dónde está el centro de datos del que vamos a usar recursos). Elegimos la opción de Bélgica por cercanía.
+3. Seleccionamos tipo de máquina: EC2 Micro.
+4. Cambiamos el "Boot disk" a "Container-Optimized OS stable".
+5. Permitimos el tráfico HTTP (marcar checkbox)
+6. Botón crear. Tarda algunos minutillos, pero cuando termine tendremos nuestra instancia en la lista de instancias de Computer Engine, con una IP interna, IP externa y opción a conectarnos a la instancia por SSH. 
+
+## Configuración para iniciar nuestro sistema
+
+1. Click en el botón SSH para abrir un terminal en nuestra instancia.
+2. Clonamos nuestro proyecto:
+    ```
+    git clone https://github.com/alopezmb/big_data_ada.git 
+    cd big_data_ada
+    ```
+    Nota: En estos pasos, hemos desplegado al versión con MongoDB. Podemos desplegar la versión con Cassandra clonando el repo con la rama adecuada.
+    
+3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
+  3.1 Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
+  ```
+  docker run docker/compose version 
+  ```
+  3.2 Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+  ```
+  $ pwd
+  /home/username/big_data_ada
+  ```
+4. El comando a ejecutar equivalente a docker-compose up es:
+  ```
+  docker run --rm -it\
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose up
+  ```
+  So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
+  To make the current directory available to the container, use the -v "$PWD:$PWD" option to mount it as a volume and the -w="$PWD" to change the working directory.
+  -it para poder interacturar con el contenedor desde el terminal.
+  
+  5. Como este comando es demasiado alrgo como para hacerlo constantemente, creamos un alias:
+  ```
+  echo alias docker-compose="'"'docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose'"'" >> ~/.bashrc
+   ```
+   Recargamos la configuración de bash:
+   ```
+   source ~/.bashrc
+   ```
+   6. Ya podemos hacer docker-compose up :)
+   
+ ## Iniciando el sistema
+ 
+ Seguiremos las instrucciones expuestas más arriba, ya que deberemos entrenar el modelo de nuevo ya que no se encuentra entrenado en el repo.
+ (Para más detalle, ver arriba)
+ 
+ 1.- Desde la carpeta initial-configs ejecutamos el comando ```docker-compose up```. Esto entrenará el modelo y hará las funciones descritas más arriba. Tarda bastante rato.
+ 2. Ejecutamos el script correspondiente para preparar la ejecución del escenario
+ ``` 
+ sh scenario_initial_config.sh
+ ```
+ 3. Cambiamos a la carpeta /scenario y ejecutamos de nuevo ```docker-compose up```
+ 4. Desde otro terminal, ejecutamos el comando ```docker-compose -f docker-compose-spark-submit.yaml up```. Nota: Recuerda actualizar el nombre de la variable
+ 5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/:1212/flights/delays/predict_kafka```
