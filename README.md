@@ -65,7 +65,7 @@ Una vez se arranquen todos los contenedores, podremos acceder al servicio web de
 
 Se accede por el puerto **1212** al servicio web porque se ha indicado así en el puerto expuesto al host para el *webserver* en el fichero docker-compose.yaml. Se puede cambiar el puerto y utilizar cualquier otro, siempre y cuando no esté siendo utilizado por otro servicio o aplicación.
 
-# Despliegue en GCP
+# Despliegue en GCP (+1 punto)
 
 Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/community/tutorials/docker-compose-on-container-optimized-os). A continuación, exponemos cuáes han sido para nuestro proyecto.
 
@@ -101,31 +101,32 @@ Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/co
             $ pwd
             /home/username/big_data_ada
             ```
-    4. El comando a ejecutar equivalente a docker-compose up es:
-        ```
-        docker run --rm -it\
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v "$PWD:$PWD" \
-        -w="$PWD" \
-        docker/compose up
-        ```
-    So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
-    To make the current directory available to the container, use the -v "$PWD:$PWD" option to mount it as a volume and the -w="$PWD" to change the working directory.
-    -it para poder interacturar con el contenedor desde el terminal.
+4. El comando a ejecutar equivalente a docker-compose up es:
+    ```
+    docker run --rm -it\
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose up
+    ```
+So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
+To make the current directory available to the container, use the -v "$PWD:$PWD" option to mount it as a volume and the -w="$PWD" to change the working directory.
+-it para poder interacturar con el contenedor desde el terminal.
 
-    5. Como este comando es demasiado alrgo como para hacerlo constantemente, creamos un alias:
-        ```
-        echo alias docker-compose="'"'docker run --rm -it \
-        -v /var/run/docker.sock:/var/run/docker.sock \
-        -v "$PWD:$PWD" \
-        -w="$PWD" \
-        docker/compose'"'" >> ~/.bashrc
-        ```
-    Recargamos la configuración de bash:
-        ```
-        source ~/.bashrc
-        ```
-    6. Ya podemos hacer docker-compose up :)
+5. Como este comando es demasiado alrgo como para hacerlo constantemente, creamos un alias:
+    ```
+    echo alias docker-compose="'"'docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose'"'" >> ~/.bashrc
+    ```
+Recargamos la configuración de bash:
+    ```
+    source ~/.bashrc
+    ```
+    
+6. Ya podemos hacer docker-compose up :)
 
  ## Iniciando el sistema
  
