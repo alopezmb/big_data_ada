@@ -1,0 +1,59 @@
+# file structure
+apiVersion: # the Kubernetes API that parses this object
+kind: # what sort of object this is
+metadata: # apply things (like names) to the object
+spec: # parameters and configurations of the object
+---
+# Job template
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: <id>
+spec:
+  template:
+    spec:
+      containers:
+      - name: <id>
+        image: <image-name>
+        command: ['cmd', '--opt', 'param']
+      restartPolicy: # Never, OnFailure
+---
+# Deployment template
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <id>
+  namespace: default
+spec:
+  replicas: <n>
+  selector: # how the Deployment finds which Pods to manage
+    matchLabels:
+      <name>: <label>
+  template:
+    metadata:
+      labels:
+        <name>: <label>
+    spec:
+      containers:
+      - name: <id>
+        image: <image-name>
+        ports:
+        - containerPort: <port>
+---
+# Service template
+apiVersion: v1
+kind: Service
+metadata:
+  name: <id>
+  namespace: default
+spec:
+  type: # ClusterIP (default), NodePort, LoadBalancer, ExternalName 
+  selector:
+    <name>: <label>
+  ports:
+  - port: <port>
+    targetPort: <port>
+     nodePort: <other-port> # for NodePort type
+# https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
+status: # for LoadBalancer type
+  loadBalancer: ...

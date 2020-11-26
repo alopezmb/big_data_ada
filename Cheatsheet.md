@@ -27,6 +27,7 @@ kubectl expose deployment <kube-name> --type LoadBalancer --port 80 --target-por
 To tear it down:
 ```
 kubectl delete service <kube-name>
+kubectl delete -f <filename>.yaml
 gcloud container clusters delete <cluster-name>
 ```
 ---
