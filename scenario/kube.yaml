@@ -1,0 +1,10 @@
+# file structure
+apiVersion: # the Kubernetes API that parses this object
+kind: # what sort of object this is
+metadata: # apply things (like names) to the object
+spec: # parameters and configurations of the object
+--- # object separator
+apiVersion:
+kind:
+metadata:
+spec:
