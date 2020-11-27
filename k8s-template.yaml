@@ -24,6 +24,8 @@ kind: Deployment
 metadata:
   name: <id>
   namespace: default
+  labels:
+    <name>: <label>
 spec:
   replicas: <n>
   selector: # how the Deployment finds which Pods to manage
@@ -34,11 +36,25 @@ spec:
       labels:
         <name>: <label>
     spec:
+      initContainers:
+      - name: <init-id>
+        image: <image-name>
+        command: ['cmd', '--opt', 'param']
       containers:
       - name: <id>
         image: <image-name>
         ports:
         - containerPort: <port>
+        volumeMounts:
+        - mountPath: /<path>
+          name: <id-volume>
+    volumes:
+    - name: <id-volume>
+      hostPath:
+        # directory location on host
+        path: /<data>
+        # this field is optional
+        type: Directory
 ---
 # Service template
 apiVersion: v1
