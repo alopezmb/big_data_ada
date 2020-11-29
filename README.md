@@ -175,3 +175,4 @@ Recargamos la configuración de bash:
  3. Cambiamos a la carpeta /scenario y ejecutamos de nuevo ```docker-compose up``` Nota: Recuerda actualizar el nombre de la variable del .jar
  5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/:1212/flights/delays/predict_kafka```
 
+Hemos dejado la instancia abierta durante varios días por lo que hemos agotado lso créditos de una de las tres cuentas. Cuando sea necesario volvemos a lanzar una instancia y os compartimos el enlace con la dirección IP para que se pueda comprobar el funcionamiento.
