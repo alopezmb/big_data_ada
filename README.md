@@ -8,13 +8,18 @@ El escenario ha sido configurado y desplegado bajo las siguientes condiciones y 
 
 Con esta configuración se ha comprobado su correcto funcionamiento.
 
+## Autores:
+
+- Alejandro López Martínez
+- Alejandro Madriñán Fernández
+- Daniel Vera Nieto
 
 
 ## Consideraciones con Cassandra
 
-Los pasos a seguir son prácticamente los mismos que antes. Por tanto se recomienda seguir los pasos ya conocidos. Hay que tener en cuenta que:
+Los pasos a seguir son prácticamente los mismos que la configuración con MongoDB. Hay que tener en cuenta que:
 
-- La **configuración inicial se hace de la misma manera.** La clase de Scala ha cambiado para adaptarla a Cassandra pero al final lo que queremos en este primer paso es generar el JAR, que se hace como ya se conoce.
+- La **configuración inicial se hace de la misma manera.** La clase de Scala ha cambiado para adaptarla a Cassandra pero al final lo que queremos en este primer paso es generar el JAR.
 - La **primera vez** que se vaya a arrancar el escenario (Arranque del Escenario), primero debemos configurar el keyspace y familias de columnas a utilizar en Cassandra (no se pueden crear dinámicamente y si se levanta el escenario entero la primera vez, dará error).  Luego ya se pueden levantar el resto. En sucesivas ocasiones, se podrán arrancar todos los contenedores a la vez sin ningún problema. 
 
 ## Configuración Inicial
@@ -122,7 +127,7 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
     git clone https://github.com/alopezmb/big_data_ada.git 
     cd big_data_ada
     ```
-    Nota: En estos pasos, hemos desplegado la versión con Cassandra clonando el repo con la rama adecuada.
+   
     
 3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
 
@@ -143,6 +148,8 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
     -w="$PWD" \
     docker/compose up
     ```
+De esta manera el contenedor de Docker Compose tiene acceso al Docker daemon
+
 So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
 To make the current directory available to the container, use the -v "$PWD:$PWD" option to mount it as a volume and the -w="$PWD" to change the working directory.
 -it para poder interacturar con el contenedor desde el terminal.
@@ -175,4 +182,4 @@ Recargamos la configuración de bash:
  3. Cambiamos a la carpeta /scenario y ejecutamos de nuevo ```docker-compose up``` Nota: Recuerda actualizar el nombre de la variable del .jar
  5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/:1212/flights/delays/predict_kafka```
 
-Hemos dejado la instancia abierta durante varios días por lo que hemos agotado lso créditos de una de las tres cuentas. Cuando sea necesario volvemos a lanzar una instancia y os compartimos el enlace con la dirección IP para que se pueda comprobar el funcionamiento.
+Hemos dejado la instancia abierta durante varios días por lo que hemos agotado los créditos de una de las tres cuentas. Cuando sea necesario volvemos a lanzar una instancia y os compartimos el enlace con la dirección IP para que se pueda comprobar el funcionamiento.
