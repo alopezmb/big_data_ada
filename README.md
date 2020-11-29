@@ -87,3 +87,91 @@ Con esto, se  levantan todos los contenedores. Concretamente:
 Una vez se arranquen todos los contenedores, podremos acceder al servicio web de predicción de retraso de vuelos mediante la siguiente URL:  http://localhost:1212/flights/delays/predict_kafka
 
 Se accede por el puerto **1212** al servicio web porque se ha indicado así en el puerto expuesto al host para el *webserver* en el fichero docker-compose.yaml. Se puede cambiar el puerto y utilizar cualquier otro, siempre y cuando no esté siendo utilizado por otro servicio o aplicación.
+
+# Despliegue en GCP (+1 punto)
+
+Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/community/tutorials/docker-compose-on-container-optimized-os). A continuación, exponemos cuáes han sido para nuestro proyecto.
+
+## Configuración de la VM en GCP
+
+1. Crear una instancia de VM de Compute Engine.
+2. Seleccionar la zona deseada (dónde está el centro de datos del que vamos a usar recursos). Elegimos la opción de Bélgica por cercanía.
+3. Seleccionamos tipo de máquina: C2-Standar-4 (suficiente RAM y CPU como para que no pete el entrenamiento del modelo. Esto se podría elegir mejor). Seleccionaremos también 100Gb de disco duro (se ha comprobado que con 10Gb peta spark por falta de espacio).
+4. Cambiamos el "Boot disk" a "Container-Optimized OS stable".
+5. Permitimos el tráfico HTTP (marcar checkbox)
+6. Botón crear. Tarda algunos minutillos, pero cuando termine tendremos nuestra instancia en la lista de instancias de Computer Engine, con una IP interna, IP externa y opción a conectarnos a la instancia por SSH. 
+
+## Ajusted de red
+
+Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como nuestra aplicación utiliza el puerto 1212, debemos configurar el firewall para que permita acceder al puerto de esta instancia. Para ello:
+
+1. Choose Networking > VPC network
+2. Choose "Firewalls rules"
+3. Choose "Create Firewall Rule"
+4. To apply the rule to select VM instances, select Targets > "Specified target tags", and enter into "Target tags" the name of the tag. In our case, ```openport1212```. This tag will be used to apply the new firewall rule onto whichever instance you'd like. 
+5. To allow incoming TCP connections to port 1212, in "Protocols and Ports" enter tcp:9090
+6. CLick create
+7. Then, make sure the instances have the network tag applied. Go to instance details->Edit: Here add the tag ```openport1212``` to the network tags list.
+
+
+## Configuración para iniciar nuestro sistema
+
+1. Click en el botón SSH para abrir un terminal en nuestra instancia.
+2. Clonamos nuestro proyecto:
+    ```
+    git clone https://github.com/alopezmb/big_data_ada.git 
+    cd big_data_ada
+    ```
+    Nota: En estos pasos, hemos desplegado la versión con Cassandra clonando el repo con la rama adecuada.
+    
+3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
+
+    3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
+            
+        docker run docker/compose version 
+        
+    3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+
+        $ pwd
+        /home/username/big_data_ada
+        
+4. El comando a ejecutar equivalente a docker-compose up es:
+    ```
+    docker run --rm -it\
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose up
+    ```
+So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
+To make the current directory available to the container, use the -v "$PWD:$PWD" option to mount it as a volume and the -w="$PWD" to change the working directory.
+-it para poder interacturar con el contenedor desde el terminal.
+
+5. Como este comando es demasiado largo como para escribirlo constantemente, creamos un alias:
+    ```
+    echo alias docker-compose="'"'docker run --rm -it \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:$PWD" \
+    -w="$PWD" \
+    docker/compose'"'" >> ~/.bashrc
+    ```
+Recargamos la configuración de bash:
+    ```
+    source ~/.bashrc
+    ```
+    
+6. Ya podemos hacer ```docker-compose up``` :)
+
+ ## Iniciando el sistema
+ 
+ Seguiremos las instrucciones expuestas más arriba, ya que deberemos entrenar el modelo de nuevo ya que no se encuentra entrenado en el repo.
+ (Para más detalle, ver arriba)
+ 
+ 1. Desde la carpeta initial-configs ejecutamos el comando ```docker-compose up```. Esto entrenará el modelo y hará las funciones descritas más arriba. Tarda bastante rato.
+ 2. Ejecutamos el script correspondiente para preparar la ejecución del escenario
+     ``` 
+     sh scenario_initial_config.sh
+     ```
+ 3. Cambiamos a la carpeta /scenario y ejecutamos de nuevo ```docker-compose up``` Nota: Recuerda actualizar el nombre de la variable del .jar
+ 5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/:1212/flights/delays/predict_kafka```
+
