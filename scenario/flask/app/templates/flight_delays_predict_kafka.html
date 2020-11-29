@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
+
   <!-- Navigation guide -->
   / <a href="/flights/delays/predict_kafka">Flight Delay Prediction with Kafka</a>
 
@@ -9,26 +10,39 @@
   </p>
 
   <!-- Generate form from search_config and request args -->
-  <form id="flight_delay_classification" action="/flights/delays/predict/classify_realtime" method="post">
+  <form class="form-inline" id="flight_delay_classification" action="/flights/delays/predict/classify_realtime" method="post">
+  	<div class="form-group mt-1">
     {% for item in form_config %}
       {% if 'label' in item %}
         <label for="{{item['field']}}">{{item['label']}}</label>
       {% else %}
         <label for="{{item['field']}}">{{item['field']}}</label>
       {% endif %}
-        <input name="{{item['field']}}" style="width: 36px; margin-right: 10px;" 
+        <input name="{{item['field']}}" class="{{item['field']}}" 
         {% if 'value' in item %}
           value="{{item['value']}}"
         {% endif %}
         ></input>
     {% endfor %}
-    <button type="submit" class="btn btn-xs btn-default" style="height: 25px">Submit</button>
+	</div>
+    <button type="submit" class="btn btn-xs btn-primary ml-1">Submit</button>
   </form>
 
-  <div style="margin-top: 10px;">
-    <p>Delay: <span id="result" style="display: inline-block;"></span></p>
+  <div class="mt-2">
+    <p>Delay: <span id="result"></span></p>
   </div>
 
-  <!-- Load our form processing javascript -->
-  <script src="/static/flight_delay_predict_polling.js"></script>
+  <!-- Style -->
+  <style>
+  	input{
+  		width:40px;
+  		margin-left:5px;
+  		margin-right:10px;
+  	}
+  	input.FlightDate{
+  		width:120PX;
+  	}
+
+  </style>
+
 {% endblock %}

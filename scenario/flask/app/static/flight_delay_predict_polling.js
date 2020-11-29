@@ -53,7 +53,7 @@ function conditionalPoll(data) {
     renderPage(response.prediction);
   }
   else if(response.status == "WAIT") {
-    setTimeout(function() {poll(response.id)}, 1000);
+    setTimeout(function() {poll(response.id)}, 3000);
   }
 }
 

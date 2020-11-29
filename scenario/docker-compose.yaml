@@ -10,12 +10,8 @@ services:
       - "CASSANDRA_SEEDS=cassandra-1"
       - "CASSANDRA_CLUSTER_NAME=Cassandra Flight Delay Prediction"
       - "CASSANDRA_BROADCAST_ADDRESS=cassandra-1"
-     # Exposing ports for inter cluster communication
     ports:
      - "9042:9042"
-#      SNITCHES
-      #- "CASSANDRA_DC=se1"
-      #- "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
     networks:
       - flight_prediction_network
 
@@ -28,14 +24,10 @@ services:
       - "CASSANDRA_SEEDS=cassandra-1"
       - "CASSANDRA_CLUSTER_NAME=Cassandra Flight Delay Prediction"
       - "CASSANDRA_BROADCAST_ADDRESS=cassandra-2"
-#      SNITCHES
-      #- "CASSANDRA_DC=se1"
-      #- "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
     ports:
       - "9043:9042"
     networks:
       - flight_prediction_network
-#    restart: always
   
   webserver:
     container_name: webserver
