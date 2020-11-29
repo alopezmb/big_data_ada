@@ -1,20 +1,2 @@
-initial_configs/jar_builder/scala_projects/flight_prediction/target
-
-initial_configs/jar_builder/scala_projects/flight_prediction/.idea
-
-initial_configs/jar_builder/scala_projects/flight_prediction/project/target
-
-initial_configs/jar_builder/scala_projects/flight_prediction_cassandra/target
-
-initial_configs/jar_builder/scala_projects/flight_prediction_cassandra/.idea
-
-initial_configs/jar_builder/scala_projects/flight_prediction_cassandra/project/target
-
-initial_configs/pyspark/models/*.bin
-
-scenario/spark/models
-
-scenario/spark/*.jar
-
 .idea
 
