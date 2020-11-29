@@ -13,5 +13,5 @@ COPY ./submit_job.sh /.
 
 RUN chmod +x wait-for-it.sh submit_job.sh
 
-CMD ["/wait-for-it.sh","spark-master:7077","--","/submit_job.sh"]
+CMD ["/wait-for-it.sh","cassandra-1:9042","-t","75","--","/submit_job.sh"]
 #CMD ["/test.sh"]

@@ -14,6 +14,6 @@ services:
     build: ./jar_builder
     environment:
       #Name of the root directory where our spark-scala project files are located.
-      - PROJECT_NAME=flight_prediction 
+      - PROJECT_NAME=flight_prediction_cassandra 
     volumes:
       - ./jar_builder/scala_projects:/mnt/scala_projects/

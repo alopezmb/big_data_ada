@@ -1,16 +1,42 @@
 version: '3'
 services:
 
-  mongodb:
-    container_name: mongodb
-    build: ./mongodb
-    ports:
-      - "27017:27017" # remember the port expose syntax is HOST:CONTAINER !
+  cassandra-1:
+    image: cassandra:3.11
     volumes:
-      - mongodbdata:/data/mongodb
+      - "cassandra1data:/var/lib/cassandra"
+      - "./cassandra:/config_db/"
+    environment:
+      - "CASSANDRA_SEEDS=cassandra-1"
+      - "CASSANDRA_CLUSTER_NAME=Cassandra Flight Delay Prediction"
+      - "CASSANDRA_BROADCAST_ADDRESS=cassandra-1"
+     # Exposing ports for inter cluster communication
+    ports:
+     - "9042:9042"
+#      SNITCHES
+      #- "CASSANDRA_DC=se1"
+      #- "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
     networks:
       - flight_prediction_network
 
+  cassandra-2:
+    image: cassandra:3.11
+    volumes:
+      - "cassandra2data:/var/lib/cassandra"
+      - "./cassandra:/config_db/"
+    environment:
+      - "CASSANDRA_SEEDS=cassandra-1"
+      - "CASSANDRA_CLUSTER_NAME=Cassandra Flight Delay Prediction"
+      - "CASSANDRA_BROADCAST_ADDRESS=cassandra-2"
+#      SNITCHES
+      #- "CASSANDRA_DC=se1"
+      #- "CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch"
+    ports:
+      - "9043:9042"
+    networks:
+      - flight_prediction_network
+#    restart: always
+  
   webserver:
     container_name: webserver
     build: ./flask
@@ -18,7 +44,9 @@ services:
       - "1212:80"
     networks:
       - flight_prediction_network
-  
+    volumes:
+      - ./flask/app:/app/
+
   zookeeper:
     container_name: zookeeper
     image: confluentinc/cp-zookeeper:5.3.0
@@ -53,12 +81,6 @@ services:
     networks:
       - flight_prediction_network
  
-  #testkafka:
-  #  container_name: testkafka
-  #  build: ./testkafka
-  #  networks:
-  #    - flight_prediction_network
-
   spark-master:
     container_name: spark-master
     image: bitnami/spark:2.4.4
@@ -86,6 +108,20 @@ services:
     networks:
       - flight_prediction_network
 
+  spark-submit:
+    container_name: spark-submit
+    build: 
+      context: ./spark
+      args:
+        - JAR_NAME=flight_prediction_cassandra.jar
+    environment:
+      - SPARK_APPLICATION_MAIN_CLASS=es.upm.dit.ging.predictor.MakePrediction
+      - "SPARK_SUBMIT_ARGS=--packages com.datastax.spark:spark-cassandra-connector_2.11:2.4.2,org.apache.spark:spark-sql-kafka-0-10_2.11:2.4.0"
+      - SPARK_MASTER_NAME=spark-master
+    volumes:
+      - ./spark/models/:/job_data/models  #Bind mount to mount models dir on each spark node
+    networks:
+      - flight_prediction_network
 
 networks:
   flight_prediction_network:
@@ -93,3 +129,5 @@ networks:
 
 volumes:
   mongodbdata:
+  cassandra1data:
+  cassandra2data:
