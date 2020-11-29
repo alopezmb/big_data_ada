@@ -1,0 +1,3 @@
+[debug] "not up to date. inChanged = true, force = false
+[debug] Updating ProjectRef(uri("file:/mnt/scala_projects/flight_prediction_cassandra/project/"), "flight_prediction_cassandra-build")...
+[debug] Done updating ProjectRef(uri("file:/mnt/scala_projects/flight_prediction_cassandra/project/"), "flight_prediction_cassandra-build")

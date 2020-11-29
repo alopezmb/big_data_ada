@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="flight_prediction_no_hdfs" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="52fd0f12-975f-4ced-8584-faa083fd3af7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../scenario_initial_config.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../../scenario_initial_config.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/docker-compose-spark-submit.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/flask/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/flask/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/flask/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/flask/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/flask/app/predict_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/flask/app/predict_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/flask/app/templates/flight_delays_predict_kafka.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/flask/app/templates/flight_delays_predict_kafka.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/flask/app/templates/flights.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/flask/app/templates/show_distance.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../scenario/flask/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../scenario/flask/requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="SBT">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="flight_prediction" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
+  <component name="ProjectId" id="1k4AbdLEY0EQ5djwwVXBe0p2osQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
+  <component name="RunManager" selected="JAR Application.Unnamed">
+    <configuration name="MakePrediction" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="es.upm.dit.ging.predictor.MakePrediction" />
+      <module name="flight_prediction" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="es.upm.dit.ging.predictor.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Unnamed" type="JarApplication" nameIsGenerated="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/last/flight_prediction.jar" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <module name="flight_prediction" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.MakePrediction" />
+      <item itemvalue="JAR Application.Unnamed" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.MakePrediction" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="52fd0f12-975f-4ced-8584-faa083fd3af7" name="Default Changelist" comment="" />
+      <created>1604949562783</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1604949562783</updated>
+      <workItem from="1604949563910" duration="4388000" />
+      <workItem from="1605224712770" duration="2875000" />
+      <workItem from="1605252574762" duration="599000" />
+      <workItem from="1605296924404" duration="1844000" />
+      <workItem from="1605469466051" duration="7686000" />
+      <workItem from="1605555227508" duration="297000" />
+      <workItem from="1605701003865" duration="265000" />
+      <workItem from="1606049339296" duration="11987000" />
+      <workItem from="1606079388041" duration="1102000" />
+      <workItem from="1606086849070" duration="577000" />
+      <workItem from="1606088184222" duration="2552000" />
+      <workItem from="1606091080500" duration="1440000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="936" y="381" width="424" height="391" key="#BuildArtifactsBeforeRunChooser" timestamp="1605227346884">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="936" y="381" width="424" height="391" key="#BuildArtifactsBeforeRunChooser/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227346884" />
+    <state x="611" y="27" width="1084" height="1053" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605227526950">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="611" y="27" width="1084" height="1053" key="#com.intellij.execution.impl.EditConfigurationsDialog/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227526950" />
+    <state x="785" y="348" width="525" height="423" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605489193341">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="785" y="348" width="525" height="423" key="#com.intellij.ide.util.TreeClassChooserDialog/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605489193341" />
+    <state x="936" y="331" width="424" height="491" key="FileChooserDialogImpl" timestamp="1605227499368">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="936" y="331" width="424" height="491" key="FileChooserDialogImpl/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227499368" />
+    <state width="1354" height="258" key="GridCell.Tab.0.bottom" timestamp="1605227587801">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1354" height="258" key="GridCell.Tab.0.bottom/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227587801" />
+    <state width="1354" height="258" key="GridCell.Tab.0.center" timestamp="1605227587800">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1354" height="258" key="GridCell.Tab.0.center/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227587800" />
+    <state width="1354" height="258" key="GridCell.Tab.0.left" timestamp="1605227587800">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1354" height="258" key="GridCell.Tab.0.left/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227587800" />
+    <state width="1354" height="258" key="GridCell.Tab.0.right" timestamp="1605227587800">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state width="1354" height="258" key="GridCell.Tab.0.right/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605227587800" />
+    <state x="545" y="127" width="1024" height="852" key="SettingsEditor" timestamp="1605489229363">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="545" y="127" width="1024" height="852" key="SettingsEditor/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605489229363" />
+    <state x="725" y="269" width="672" height="678" key="search.everywhere.popup" timestamp="1605225670139">
+      <screen x="72" y="27" width="1848" height="1053" />
+    </state>
+    <state x="725" y="269" width="672" height="678" key="search.everywhere.popup/72.27.1848.1053/1920.0.1920.1080@72.27.1848.1053" timestamp="1605225670139" />
+  </component>
+</project>

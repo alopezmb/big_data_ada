@@ -1,0 +1,27 @@
+[debug] Packaging /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/flight_prediction_2.11-0.1.jar ...
+[debug] Input file mappings:
+[debug] 	
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes
+[debug] 	es
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es
+[debug] 	es/upm
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm
+[debug] 	es/upm/dit
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit
+[debug] 	es/upm/dit/ging
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging
+[debug] 	es/upm/dit/ging/predictor
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor
+[debug] 	es/upm/dit/ging/predictor/MakePrediction$$anonfun$1.class
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor/MakePrediction$$anonfun$1.class
+[debug] 	es/upm/dit/ging/predictor/MakePrediction$$anonfun$3.class
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor/MakePrediction$$anonfun$3.class
+[debug] 	es/upm/dit/ging/predictor/MakePrediction.class
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor/MakePrediction.class
+[debug] 	es/upm/dit/ging/predictor/MakePrediction$$anonfun$4.class
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor/MakePrediction$$anonfun$4.class
+[debug] 	es/upm/dit/ging/predictor/MakePrediction$.class
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor/MakePrediction$.class
+[debug] 	es/upm/dit/ging/predictor/MakePrediction$$anonfun$2.class
+[debug] 	  /mnt/scala_projects/flight_prediction_cassandra/target/scala-2.11/classes/es/upm/dit/ging/predictor/MakePrediction$$anonfun$2.class
+[debug] Done packaging.
