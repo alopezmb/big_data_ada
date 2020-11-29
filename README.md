@@ -1,6 +1,8 @@
-# Práctica Big Data: Docker + Docker-Compose + Spark-Submit + Cassandra (v2.0; 9puntos)
+# Práctica Big Data - Versión Entregable
 
-El escenario ha sido configurado y desplegado bajo las siguientes condiciones y versiones:
+#### Docker + Docker-Compose + Spark-Submit + Cassandra = 9 puntos + 1 punto de despliegue en GCE . Total = 10 puntos realizados
+
+El escenario en local ha sido configurado y desplegado bajo las siguientes condiciones y versiones:
 
 - Ubuntu 18.04 y 20.04
 - Versión Docker utilizada: 19.03.13
@@ -85,7 +87,7 @@ sudo docker-compose up #Levantamos todo el escenario
 Con esto, se  levantan todos los contenedores. Concretamente:
 
 - servidor web (flask)
-- cluster de procesamiento (spark) + spark-submit **Ya se ha integrado en el mismo docker-compose y se ha modificado el nivel de Logging para evitar esos mensajes tan molestos.**
+- cluster de procesamiento (spark) + spark-submit 
 - _pipeline_ de datos (kafka + zookeeper)
 - almacenamiento (cassandra)
 
@@ -128,18 +130,17 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
     cd big_data_ada
     ```
    
-    
 3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
 
     3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
             
         docker run docker/compose version 
-        
+    
     3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
 
         $ pwd
         /home/username/big_data_ada
-        
+    
 4. El comando a ejecutar equivalente a docker-compose up es:
     ```
     docker run --rm -it\
@@ -170,10 +171,10 @@ Recargamos la configuración de bash:
 6. Ya podemos hacer ```docker-compose up``` :)
 
  ## Iniciando el sistema
- 
+
  Seguiremos las instrucciones expuestas más arriba, ya que deberemos entrenar el modelo de nuevo ya que no se encuentra entrenado en el repo.
  (Para más detalle, ver arriba)
- 
+
  1. Desde la carpeta initial-configs ejecutamos el comando ```docker-compose up```. Esto entrenará el modelo y hará las funciones descritas más arriba. Tarda bastante rato.
  2. Ejecutamos el script correspondiente para preparar la ejecución del escenario
      ``` 

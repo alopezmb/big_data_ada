@@ -41,7 +41,7 @@ services:
     container_name: webserver
     build: ./flask
     ports:
-      - "1212:80"
+      - "80:80"
     networks:
       - flight_prediction_network
     volumes:
@@ -128,6 +128,5 @@ networks:
     driver: bridge
 
 volumes:
-  mongodbdata:
   cassandra1data:
   cassandra2data:
