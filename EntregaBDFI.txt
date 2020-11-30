@@ -1,0 +1,6 @@
+Autores: 
+- Alejandro López Martínez
+- Alejandro Madriñán Fernández
+- Daniel Vera Nieto
+
+Link al repo: https://github.com/alopezmb/big_data_ada
