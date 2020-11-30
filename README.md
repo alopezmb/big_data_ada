@@ -241,8 +241,7 @@ Recargamos la configuración de bash:
     ```bash
     source ~/.bashrc
     ```
-    
-    Con esto ya tenemos disponible el comando ```docker-compose up``` :)
+ Con esto ya tendremos el comando ```docker-compose``` disponible.  
     
 6. Necesitamos configurar los keyspaces y familias de columnas a utilizar en Cassandra, como se explicaba en el apartado de **Arranque del Escenario**. Para este caso necesitamos ejecutar los siguientes comandos
 
