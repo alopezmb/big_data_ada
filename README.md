@@ -139,7 +139,7 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
 1. Click en el botón SSH para abrir un terminal en nuestra instancia.
 
 2. Clonamos nuestro proyecto:
-    ```
+    ```bash
     git clone https://github.com/alopezmb/big_data_ada.git 
     cd big_data_ada
     git checkout gcedeploy
@@ -149,16 +149,20 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
 
     3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
     
-        docker run docker/compose version 
-    
-    3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+    ```bash
+    docker run docker/compose version 
+    ```
 
-        $ pwd
-        /home/username/big_data_ada
+    3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+    
+    ```bash
+    $ pwd
+    /home/username/big_data_ada
+    ```
     
 4. **(NO EJECUTAR**) El comando a ejecutar equivalente a docker-compose up es :
 
-    ```
+    ```bash
     docker run --rm -it\
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "$PWD:$PWD" \
@@ -172,7 +176,7 @@ To make the current directory available to the container, use the -v "$PWD:$PWD"
 -it para poder interacturar con el contenedor desde el terminal."
 
 5. Como este comando es demasiado largo como para escribirlo constantemente, creamos un alias:
-    ```
+    ```bash
     echo alias docker-compose="'"'docker run --rm -it \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v "$PWD:$PWD" \
@@ -180,7 +184,7 @@ To make the current directory available to the container, use the -v "$PWD:$PWD"
     docker/compose'"'" >> ~/.bashrc
     ```
 Recargamos la configuración de bash:
-    ```
+    ```bash
     source ~/.bashrc
     ```
     
@@ -206,12 +210,12 @@ Recargamos la configuración de bash:
 
 **NOTA: Esto es lo que haremos siempre que queramos arrancar nuestro escenario, a no ser que sea la primera vez que en cuyo caso debemos de realizar primero la configuración inicial de GCP (paso anterior)**
 
-En el paso anterior nos cambiamos a la rama `gcedeploy`, la cual incluye el escenario ya preparado con el jar de spark scala necesario y el directorio de modelos. En esta rama se incluye pues si se desea realizar la configuración inicial de entrenar el modelo, se necesita una máquina virtual con muchos más recursos sólo para poder llevar a cabo esta tarea, y no merece la pena.
+En el paso anterior nos cambiamos a la rama `gcedeploy`, la cual incluye el escenario ya preparado con el jar de spark scala necesario y el directorio de modelos. En esta rama se incluyen estos ficheros pues, si se desea realizar la configuración inicial de entrenar el modelo, se necesita una máquina virtual con muchos más recursos sólo para poder llevar a cabo esta tarea, y no merece la pena.
 
 Pasos para arrancar el escenario de predicción:
 
- 3. Cambiamos a la carpeta /scenario y ejecutamos ```docker-compose up``` 
- 5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/flights/delays/predict_kafka```
+1. Cambiamos a la carpeta /scenario y ejecutamos ```docker-compose up``` 
+2. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/flights/delays/predict_kafka```
 
 Hemos dejado la instancia abierta durante varios días por lo que hemos agotado los créditos de una de las tres cuentas. Cuando sea necesario volvemos a lanzar una instancia y os compartimos el enlace con la dirección IP para que se pueda comprobar el funcionamiento. No podemos poner aquí la dirección IP porque al iniciar de nuevo la máquina se nos asignará una nueva.
 
