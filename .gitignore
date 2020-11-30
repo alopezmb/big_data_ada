@@ -16,5 +16,7 @@ scenario/spark/models
 
 scenario/spark/*.jar
 
+scenario/flask/app/__pycache__
+
 .idea
 
