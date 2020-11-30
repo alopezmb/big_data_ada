@@ -13,8 +13,14 @@ Con esta configuración se ha comprobado su correcto funcionamiento.
 ## Autores:
 
 - Alejandro López Martínez
+
 - Alejandro Madriñán Fernández
+
 - Daniel Vera Nieto
+
+  ------
+
+  
 
 
 ## Consideraciones con Cassandra
@@ -91,9 +97,13 @@ Con esto, se  levantan todos los contenedores. Concretamente:
 - _pipeline_ de datos (kafka + zookeeper)
 - almacenamiento (cassandra)
 
-Una vez se arranquen todos los contenedores, podremos acceder al servicio web de predicción de retraso de vuelos mediante la siguiente URL:  http://localhost:1212/flights/delays/predict_kafka
+Una vez se arranquen todos los contenedores, podremos acceder al servicio web de predicción de retraso de vuelos mediante la siguiente URL:  http://localhost/flights/delays/predict_kafka
 
-Se accede por el puerto **1212** al servicio web porque se ha indicado así en el puerto expuesto al host para el *webserver* en el fichero docker-compose.yaml. Se puede cambiar el puerto y utilizar cualquier otro, siempre y cuando no esté siendo utilizado por otro servicio o aplicación.
+Se accede por el puerto **80** al servicio web porque se ha indicado así en el puerto expuesto al host para el *webserver* en el fichero docker-compose.yaml. Se puede cambiar el puerto y utilizar cualquier otro, siempre y cuando no esté siendo utilizado por otro servicio o aplicación.
+
+------
+
+
 
 # Despliegue en GCP (+1 punto)
 
@@ -103,37 +113,42 @@ Hemos seguido los pasos descritos en [este tutorial](https://cloud.google.com/co
 
 1. Crear una instancia de VM de Compute Engine.
 2. Seleccionar la zona deseada (dónde está el centro de datos del que vamos a usar recursos). Elegimos la opción de Bélgica por cercanía.
-3. Seleccionamos tipo de máquina: C2-Standar-4 (suficiente RAM y CPU como para que no pete el entrenamiento del modelo. Esto se podría elegir mejor). Seleccionaremos también 100Gb de disco duro (se ha comprobado que con 10Gb peta spark por falta de espacio).
+3. Seleccionamos tipo de máquina: E2-Highmem-2 (2vCPU, 16GB RAM). Necesitamos bastante RAM para que funcione el escenario. Seleccionaremos también 40Gb de disco duro (se ha comprobado que con 10Gb peta spark por falta de espacio).
 4. Cambiamos el "Boot disk" a "Container-Optimized OS stable".
 5. Permitimos el tráfico HTTP (marcar checkbox)
 6. Botón crear. Tarda algunos minutillos, pero cuando termine tendremos nuestra instancia en la lista de instancias de Computer Engine, con una IP interna, IP externa y opción a conectarnos a la instancia por SSH. 
 
 ## Ajusted de red
 
-Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como nuestra aplicación utiliza el puerto 1212, debemos configurar el firewall para que permita acceder al puerto de esta instancia. Para ello:
+Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como nuestra aplicación utiliza el puerto 80 , Google Cloud Platform por defecto habilita el tráfico de entrada en ese puerto, luego no hay que configurar nada. Si el servidor web flask corriera en otro puerto (indicado en el docker-compose.yaml), entonces habría que seguir estos pasos:
+
+ Debemos configurar el firewall para que permita acceder al puerto que se necesita. Imaginemos que es el puerto 1212. Para ello:
 
 1. Choose Networking > VPC network
 2. Choose "Firewalls rules"
 3. Choose "Create Firewall Rule"
 4. To apply the rule to select VM instances, select Targets > "Specified target tags", and enter into "Target tags" the name of the tag. In our case, ```openport1212```. This tag will be used to apply the new firewall rule onto whichever instance you'd like. 
-5. To allow incoming TCP connections to port 1212, in "Protocols and Ports" enter tcp:9090
-6. CLick create
+5. To allow incoming TCP connections to port 1212 , in "Protocols and Ports" enter tcp:1212
+6. Click create
 7. Then, make sure the instances have the network tag applied. Go to instance details->Edit: Here add the tag ```openport1212``` to the network tags list.
 
+## Configuración para iniciar nuestro sistema en GCP
 
-## Configuración para iniciar nuestro sistema
+**NOTA: Esta configuración sólo es necesaria la primera vez que arrancamos la instancia, el resto de veces no es necesario**
 
 1. Click en el botón SSH para abrir un terminal en nuestra instancia.
+
 2. Clonamos nuestro proyecto:
     ```
     git clone https://github.com/alopezmb/big_data_ada.git 
     cd big_data_ada
-    ```
+    git checkout gcedeploy
+   ```
    
 3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
 
     3.1. Descargar y correr la imagen de Docker Compose y mostrar la versión de la misma.
-            
+    
         docker run docker/compose version 
     
     3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
@@ -141,7 +156,8 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
         $ pwd
         /home/username/big_data_ada
     
-4. El comando a ejecutar equivalente a docker-compose up es:
+4. **(NO EJECUTAR**) El comando a ejecutar equivalente a docker-compose up es :
+
     ```
     docker run --rm -it\
     -v /var/run/docker.sock:/var/run/docker.sock \
@@ -149,11 +165,11 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
     -w="$PWD" \
     docker/compose up
     ```
-De esta manera el contenedor de Docker Compose tiene acceso al Docker daemon
+    De esta manera el contenedor de Docker Compose tiene acceso al Docker daemon
 
-So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
+"So that the Docker Compose container has access to the Docker daemon, mount the Docker socket with the -v /var/run/docker.sock:/var/run/docker.sock option.
 To make the current directory available to the container, use the -v "$PWD:$PWD" option to mount it as a volume and the -w="$PWD" to change the working directory.
--it para poder interacturar con el contenedor desde el terminal.
+-it para poder interacturar con el contenedor desde el terminal."
 
 5. Como este comando es demasiado largo como para escribirlo constantemente, creamos un alias:
     ```
@@ -168,19 +184,34 @@ Recargamos la configuración de bash:
     source ~/.bashrc
     ```
     
-6. Ya podemos hacer ```docker-compose up``` :)
+    Con esto ya tenemos disponible el comando ```docker-compose up``` :)
+    
+6. Necesitamos configurar los keyspaces y familias de columnas a utilizar en Cassandra, como se explicaba en el apartado de **Arranque del Escenario**. Para este caso necesitamos ejecutar los siguientes comandos
+
+    ```bash
+    cd scenario
+    docker-compose up cassandra-1 cassandra-2 #Arranca solo el cluster de cassandra
+    
+    #Abre otro terminal SSH para lo sucesivo:
+    cd big_data_ada/scenario
+    docker-compose exec cassandra-1 bash #Acceso al bash de cassandra-1
+    $cassandra-1> cqlsh -f /config_db/flights.cql #Comando cqlsh dentro del bash de cassandra-1
+    $cassandra-1> exit #Salimos del bash de cassandra-1
+    docker-compose down #Paramos el cluster de cassandra
+    ```
+
+    Con estos pasos tendremos ya todo listo para poder iniciar el sistema.
 
  ## Iniciando el sistema
 
- Seguiremos las instrucciones expuestas más arriba, ya que deberemos entrenar el modelo de nuevo ya que no se encuentra entrenado en el repo.
- (Para más detalle, ver arriba)
+**NOTA: Esto es lo que haremos siempre que queramos arrancar nuestro escenario, a no ser que sea la primera vez que en cuyo caso debemos de realizar primero la configuración inicial de GCP (paso anterior)**
 
- 1. Desde la carpeta initial-configs ejecutamos el comando ```docker-compose up```. Esto entrenará el modelo y hará las funciones descritas más arriba. Tarda bastante rato.
- 2. Ejecutamos el script correspondiente para preparar la ejecución del escenario
-     ``` 
-     sh scenario_initial_config.sh
-     ```
- 3. Cambiamos a la carpeta /scenario y ejecutamos de nuevo ```docker-compose up``` Nota: Recuerda actualizar el nombre de la variable del .jar
- 5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/:1212/flights/delays/predict_kafka```
+En el paso anterior nos cambiamos a la rama `gcedeploy`, la cual incluye el escenario ya preparado con el jar de spark scala necesario y el directorio de modelos. En esta rama se incluye pues si se desea realizar la configuración inicial de entrenar el modelo, se necesita una máquina virtual con muchos más recursos sólo para poder llevar a cabo esta tarea, y no merece la pena.
 
-Hemos dejado la instancia abierta durante varios días por lo que hemos agotado los créditos de una de las tres cuentas. Cuando sea necesario volvemos a lanzar una instancia y os compartimos el enlace con la dirección IP para que se pueda comprobar el funcionamiento.
+Pasos para arrancar el escenario de predicción:
+
+ 3. Cambiamos a la carpeta /scenario y ejecutamos ```docker-compose up``` 
+ 5. El sistema ya debería estar accesible y funcional en ```<dir IP externa asignada a tu instancia>/flights/delays/predict_kafka```
+
+Hemos dejado la instancia abierta durante varios días por lo que hemos agotado los créditos de una de las tres cuentas. Cuando sea necesario volvemos a lanzar una instancia y os compartimos el enlace con la dirección IP para que se pueda comprobar el funcionamiento. No podemos poner aquí la dirección IP porque al iniciar de nuevo la máquina se nos asignará una nueva.
+
