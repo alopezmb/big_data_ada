@@ -195,7 +195,7 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
     cd big_data_ada
     git checkout gcedeploy
     ```
-```
+
 
 3. No podemos instalar docker-compose en la instancia, por lo que nos descargaremos una imagen para usarlo:
 
@@ -203,14 +203,16 @@ Por defecto GCP tiene bloqueado el acceso a la inmensa mayoría de puertos. Como
     
     ```bash
     docker run docker/compose version 
-```
-
-    3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.
+    ```
+    
+     3.2. Asegúrate de que estás en un directorio con permisos de escritura, como tu ```/home```.  
     
     ```bash
-    $ pwd
+    $ pwd 
     /home/username/big_data_ada
     ```
+    
+    
 
 4. **(NO EJECUTAR**) El comando a ejecutar equivalente a docker-compose up es :
 
